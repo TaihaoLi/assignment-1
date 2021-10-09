@@ -14,9 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -70,7 +68,7 @@ public class PlanController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new JSONObject().put("Message", " Plan with this id already exist").toString());
         }
 
-        Map<String, Object> savedPlanMap = planservice.savePlan(key,json);
+       planservice.saveMedicalPlan(key,"content",json);
 
         //create etag for create
         String savedPlan = json.toString();
@@ -99,7 +97,7 @@ public class PlanController {
 
 
         String key = type + "_" + objectId;
-        Map<String, Object> plan = planservice.getPlan(key);
+        String plan = planservice.getMedicalPlan(key);
 
 
         return ResponseEntity.ok().body(new JSONObject(plan).toString());
@@ -116,7 +114,7 @@ public class PlanController {
                     .body(new JSONObject().put("Message", "ObjectId does not exist").toString());
         }
 
-        planservice.deletePlan("plan" + "_" + objectId);
+        planservice.deletetMedicalPlan("plan" + "_" + objectId);
 
         
 

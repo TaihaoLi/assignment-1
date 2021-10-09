@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import redis.clients.jedis.Jedis;
 @Repository
 public class PlanDao {
+
+
     // Adds specified member to the set value stored at a specified key
     public void addSetValue(String key, String value) {
         try (Jedis jedis = new Jedis("localhost")) {
@@ -19,6 +21,12 @@ public class PlanDao {
     public void hSet(String key, String field, String value ) {
         try (Jedis jedis = new Jedis("localhost")) {
             jedis.hset(key, field, value);
+        }
+    }
+    // delete the specified hash key
+    public void deletehSet(String key ) {
+        try (Jedis jedis = new Jedis("localhost")) {
+            jedis.del(key);
         }
     }
 
